@@ -122,6 +122,20 @@ class SearchPage extends Component {
         var query = urlForQueryAndPage('place_name', this.state.searchString, 1);
         this._executeQuery(query);
     }
+    onLocationPressed() {
+        navigator.geolocation.getCurrentPosition(
+            location => {
+            var search = location.coords.latitude + ',' + location.coords.longitude;
+            this.setState({ searchString: search });
+            var query = urlForQueryAndPage('centre_point', search, 1);
+            this._executeQuery(query);
+        },
+            error => {
+            this.setState({
+                message: 'There was a problem with obtaining your location: ' + error
+            });
+        });
+    }
     render() {
         var spinner = this.state.isLoading ? (<ActivityIndicatorIOS hidden='true' size='large'/> ) : ( <View/>);
         console.log('SearchPage.render');
@@ -148,7 +162,11 @@ class SearchPage extends Component {
                         <Text style={styles.buttonText}>Go</Text>
                     </TouchableHighlight>
                 </View>
-                <TouchableHighlight style={styles.button} underlayColor='#99d9f4'>
+                <TouchableHighlight
+                    onPress={this.onLocationPressed.bind(this)}
+                    style={styles.button}
+                    underlayColor='#99d9f4'
+                >
                     <Text style={styles.buttonText}>Location</Text>
                 </TouchableHighlight>
                 <Image source={require('image!house')} style={styles.image}/>
