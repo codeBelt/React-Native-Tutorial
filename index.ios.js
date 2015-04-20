@@ -20,15 +20,9 @@ var styles = React.StyleSheet.create({
     }
 });
 
-class HelloWorld extends React.Component {
-    render() {
-        return <React.Text style={styles.text}>Hello World (Again)</React.Text>;
-    }
-}
-
 class PropertyFinder extends React.Component {
     render() {
-        return (<React.NavigatorIOS style={styles.container} initialRoute={{title: 'Property Finder', component: HelloWorld}} />);
+        return (<React.NavigatorIOS style={styles.container} initialRoute={{title: 'Property Finder', component: SearchPage}} />);
     }
 }
 
